@@ -1,0 +1,5 @@
+node_modules/
+.venv/
+data/
+app.py
+split_data.py
