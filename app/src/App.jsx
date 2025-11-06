@@ -15,7 +15,7 @@ function App() {
     formData.append("image", file);
 
     try {
-      const res = await fetch("http://localhost:4000/api/predict", {
+      const res = await fetch("https://express-api-gpjx.onrender.com/", {
         method: "POST",
         body: formData,
       });
