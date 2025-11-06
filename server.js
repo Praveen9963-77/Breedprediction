@@ -35,6 +35,7 @@ app.post("/api/predict", upload.single("image"), async (req, res) => {
 
   } catch (error) {
     console.error(error);
+    console.log("hi");
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
