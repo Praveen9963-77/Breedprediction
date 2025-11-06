@@ -5,18 +5,17 @@ import numpy as np
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
 from tensorflow.keras.applications.efficientnet import preprocess_input
-import os
 from werkzeug.utils import secure_filename
-
+import os
 # === Initialize Flask App ===
 app = Flask(__name__)
 CORS(app)  # allow cross-origin requests (from React or Express)
 
 # === Load model once ===
-print("✅ Loading model...")
-model = load_model("model/breed_model.keras", custom_objects={'preprocess_input': preprocess_input})
+model_path = os.path.join(os.getcwd(), "model", "breed_model.keras")
+print(f"📦 Loading model from: {model_path}")
+model = load_model(model_path, custom_objects={'preprocess_input': preprocess_input})
 print("✅ Model loaded successfully!")
-
 # === Class names (must match your training order) ===
 class_names = ['Ayrshire cattle', 'Brown Swiss cattle', 'Holstein Friesian cattle', 'Jersey cattle', 'Red Dane cattle']
 
