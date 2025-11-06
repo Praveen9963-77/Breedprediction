@@ -7,7 +7,9 @@ import fs from "fs";
 import FormData from "form-data"; // ⬅️ important: you missed this import
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "https://ai-breeddetector.onrender.com"
+}));
 
 // setup multer for file uploads
 const upload = multer({ dest: "uploads/" });

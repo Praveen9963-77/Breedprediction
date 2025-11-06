@@ -35,7 +35,7 @@ function App() {
 
   return (
     <div style={{ textAlign: "center", marginTop: "40px" }}>
-      <h2>Cow Breed Recognition 🐄</h2>
+      <h2>Breed Recognition 🐄</h2>
       <input
         type="file"
         accept="image/*"
