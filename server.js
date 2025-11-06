@@ -1,44 +1,38 @@
 
-import express from "express";
-import multer from "multer";
-import fetch from "node-fetch"; // if using Node < 18
-import cors from "cors";
-import fs from "fs";
-import FormData from "form-data"; // ⬅️ important: you missed this import
-
+import express from 'express';
+import fetch from 'node-fetch';
+import FormData from 'form-data';
+import fileUpload from 'express-fileupload';
+import cors from 'cors';
 const app = express();
-app.use(cors({
-  origin: "https://ai-breeddetector.onrender.com"
-}));
-
-// setup multer for file uploads
-const upload = multer({ dest: "uploads/" });
-app.get('/',(req,res)=>{
-  res.send("express api deployed successfully");
-})
-app.post("/api/predict", upload.single("image"), async (req, res) => {
+app.use(fileUpload());
+app.use(cors());
+app.post("/api/predict", async (req, res) => {
   try {
-    const filePath = req.file.path;
-    
-    // create form data for Flask server
-    const formData = new FormData();
-    formData.append("image", fs.createReadStream(filePath));
+    if (!req.files || !req.files.image) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
 
-    // send image to Flask backend
+    const formData = new FormData();
+    formData.append("image", req.files.image.data, req.files.image.name);
+
     const response = await fetch("https://breedprediction-3.onrender.com/predict", {
       method: "POST",
       body: formData,
-      headers: formData.getHeaders(), // ⬅️ required when using form-data
     });
-    console.log("called");
-    const data = await response.json();
+
+    const text = await response.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      return res.status(502).json({ error: "Invalid response from Flask", raw: text });
+    }
+
     res.json(data);
 
-  } catch (error) {
-    console.error(error);
-    console.log("hi");
-    res.status(500).json({ error: "Internal Server Error" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
   }
 });
-
-app.listen(4000, () => console.log("✅ Express running on port 4000"));
