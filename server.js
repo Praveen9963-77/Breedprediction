@@ -11,7 +11,9 @@ app.use(cors());
 
 // setup multer for file uploads
 const upload = multer({ dest: "uploads/" });
-
+app.get('/',(req,res)=>{
+  res.send("express api deployed successfully");
+})
 app.post("/api/predict", upload.single("image"), async (req, res) => {
   try {
     const filePath = req.file.path;
