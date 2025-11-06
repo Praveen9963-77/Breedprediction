@@ -19,7 +19,7 @@ app.get('/',(req,res)=>{
 app.post("/api/predict", upload.single("image"), async (req, res) => {
   try {
     const filePath = req.file.path;
-
+    
     // create form data for Flask server
     const formData = new FormData();
     formData.append("image", fs.createReadStream(filePath));
@@ -30,6 +30,7 @@ app.post("/api/predict", upload.single("image"), async (req, res) => {
       body: formData,
       headers: formData.getHeaders(), // ⬅️ required when using form-data
     });
+    console.log("called");
     const data = await response.json();
     res.json(data);
 
