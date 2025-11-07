@@ -51,7 +51,7 @@ def predict():
         confidence = float(np.max(predictions[0]) * 100)
 
         os.remove(file_path)
-
+        print(predicted_class)
         return jsonify({
             "predicted_breed": predicted_class,
             "confidence": confidence
