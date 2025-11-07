@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import tensorflow as tf
 import numpy as np
@@ -9,9 +10,7 @@ from werkzeug.utils import secure_filename
 import os
 
 app = Flask(__name__)
-
-# ✅ Allow your React frontend origin
-CORS(app, resources={r"/*": {"origins": "*"}});
+CORS(app)
 
 # === Load Model ===
 model_path = os.path.join(os.getcwd(), "model", "breed_model.keras")
@@ -19,13 +18,16 @@ print(f"📦 Loading model from: {model_path}")
 model = load_model(model_path, custom_objects={'preprocess_input': preprocess_input})
 print("✅ Model loaded successfully!")
 
-# === Class names ===
 class_names = ['Ayrshire cattle', 'Brown Swiss cattle', 'Holstein Friesian cattle', 'Jersey cattle', 'Red Dane cattle']
 
-# === Uploads folder ===
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+
+@app.route("/")
+def home():
+    return render_template("index.html")
 
 
 @app.route("/predict", methods=["POST"])
@@ -59,7 +61,5 @@ def predict():
         return jsonify({"error": str(e)}), 500
 
 
-# === Entry point for Render ===
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)

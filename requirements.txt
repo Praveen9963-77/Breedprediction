@@ -1,6 +1,6 @@
-flask==3.1.2
-flask-cors==6.0.1
-tensorflow-cpu==2.20.0
+Flask
+Flask-Cors
+tensorflow
 numpy
-werkzeug
+Werkzeug
 gunicorn

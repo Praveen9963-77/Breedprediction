@@ -1,10 +1,65 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Breed Predictor</title>
-  </head>
-  <body>
-    <h1>🐄 Welcome to the Breed Prediction App</h1>
-    <p>Upload an image to predict the breed.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Breed Detector</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input, button {
+      margin: 10px;
+      padding: 10px;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <h2>🐄 Breed Detector</h2>
+  <input type="file" id="imageInput" accept="image/*" />
+  <button id="predictBtn">Predict</button>
+  <div id="result"></div>
+
+  <script>
+    const predictBtn = document.getElementById("predictBtn");
+    const imageInput = document.getElementById("imageInput");
+    const resultDiv = document.getElementById("result");
+
+    predictBtn.addEventListener("click", async () => {
+      const file = imageInput.files[0];
+      if (!file) {
+        resultDiv.textContent = "Please select an image.";
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("image", file);
+
+      resultDiv.textContent = "⏳ Predicting...";
+
+      try {
+        const response = await fetch("/predict", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+          resultDiv.textContent = "❌ " + data.error;
+        } else {
+          resultDiv.innerHTML = `✅ Predicted: <b>${data.predicted_breed}</b> (${data.confidence.toFixed(2)}%)`;
+        }
+      } catch (error) {
+        console.error(error);
+        resultDiv.textContent = "❌ Error predicting breed.";
+      }
+    });
+  </script>
+</body>
 </html>
