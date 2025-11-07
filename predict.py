@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,render_template
 from flask_cors import CORS
 import os
 
@@ -7,8 +7,7 @@ CORS(app)  # Allow cross-origin requests
 
 @app.route('/')
 def home():
-    return "Backend is running!"
-
+    return render_template("index.html")
 @app.route('/predict', methods=['POST'])
 def predict():
     # Placeholder for your actual logic
