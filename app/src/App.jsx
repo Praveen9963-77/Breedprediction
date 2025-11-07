@@ -15,7 +15,7 @@ function App() {
     formData.append("image", file);
 
     try {
-      const res = await fetch("https://express-api-gpjx.onrender.com/api/predict", {
+      const res = await fetch("https://breedprediction-4.onrender.com/predict", {
         method: "POST",
         body: formData,
       });
