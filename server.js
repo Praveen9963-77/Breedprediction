@@ -16,7 +16,7 @@ app.post("/api/predict", async (req, res) => {
     const formData = new FormData();
     formData.append("image", req.files.image.data, req.files.image.name);
 
-    const response = await fetch("https://breedprediction-3.onrender.com/predict", {
+    const response = await fetch("https://breedprediction-4.onrender.com/predict", {
       method: "POST",
       body: formData,
     });
