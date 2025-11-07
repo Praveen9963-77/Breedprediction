@@ -11,7 +11,7 @@ import os
 app = Flask(__name__)
 
 # ✅ Allow your React frontend origin
-CORS(app, origins=["https://ai-breeddetector.onrender.com"])
+CORS(app, resources={r"/*": {"origins": "*"}});
 
 # === Load Model ===
 model_path = os.path.join(os.getcwd(), "model", "breed_model.keras")
