@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify,render_template
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import tensorflow as tf
 import numpy as np
@@ -7,28 +7,27 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.applications.efficientnet import preprocess_input
 from werkzeug.utils import secure_filename
 import os
-# === Initialize Flask App ===
-app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": ["https://ai-breeddetector.onrender.com"]}})
-# allow cross-origin requests (from React or Express)
 
-# === Load model once ===
+app = Flask(__name__)
+
+# ✅ Allow your React frontend origin
+CORS(app, origins=["https://ai-breeddetector.onrender.com"])
+
+# === Load Model ===
 model_path = os.path.join(os.getcwd(), "model", "breed_model.keras")
 print(f"📦 Loading model from: {model_path}")
 model = load_model(model_path, custom_objects={'preprocess_input': preprocess_input})
 print("✅ Model loaded successfully!")
-# === Class names (must match your training order) ===
+
+# === Class names ===
 class_names = ['Ayrshire cattle', 'Brown Swiss cattle', 'Holstein Friesian cattle', 'Jersey cattle', 'Red Dane cattle']
 
-# === Create uploads folder if not exists ===
+# === Uploads folder ===
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# === Prediction Route ===
-@app.route('/',methods=["GET"])
-def home():
-    return render_template('index.html')
+
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
@@ -40,18 +39,15 @@ def predict():
         file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
         file.save(file_path)
 
-        # Preprocess the image
         img = image.load_img(file_path, target_size=(224, 224))
         img_array = image.img_to_array(img)
         img_array = np.expand_dims(img_array, axis=0)
         img_array = preprocess_input(img_array)
 
-        # Predict
         predictions = model.predict(img_array)
         predicted_class = class_names[np.argmax(predictions[0])]
         confidence = float(np.max(predictions[0]) * 100)
 
-        # Remove uploaded file (optional)
         os.remove(file_path)
 
         return jsonify({
@@ -63,8 +59,7 @@ def predict():
         return jsonify({"error": str(e)}), 500
 
 
-# === Run Server ===
+# === Entry point for Render ===
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-
