@@ -9,7 +9,8 @@ from werkzeug.utils import secure_filename
 import os
 # === Initialize Flask App ===
 app = Flask(__name__)
-CORS(app)  # allow cross-origin requests (from React or Express)
+CORS(app, resources={r"/*": {"origins": ["https://ai-breeddetector.onrender.com"]}})
+# allow cross-origin requests (from React or Express)
 
 # === Load model once ===
 model_path = os.path.join(os.getcwd(), "model", "breed_model.keras")
