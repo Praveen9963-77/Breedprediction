@@ -1,0 +1,234 @@
+/* Global reset */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  background-image: url('/static/cow3.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* App wrapper */
+.app {
+  width: 100%;
+  max-width: 920px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Tagline */
+#main {
+  font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+  margin-top: 30px;
+  font-size: 1.25rem;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(0,0,0,0.7);
+  max-width: 900px;
+  line-height: 1.4;
+  padding: 0 10px;
+  z-index: 2;
+}
+
+/* Glass container */
+/* 🔹 Glowing border effect */
+.container {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), 0 0 30px rgba(0, 255, 255, 0.3);
+  transition: box-shadow 0.3s ease-in-out, transform 0.2s ease;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  padding: 20px;
+}
+
+/* Optional subtle hover glow */
+.container:hover {
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.8), 0 0 50px rgba(0, 255, 255, 0.6);
+  transform: scale(1.01);
+}
+
+/* For the result card too */
+.result-card {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), 0 0 30px rgba(0, 255, 255, 0.3);
+  transition: box-shadow 0.3s ease-in-out;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 20px;
+}
+
+
+/* Section heading */
+h2.section-title {
+  font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+  margin: 0 0 12px 0;
+  font-size: 1.8rem;
+  color: hsl(231, 80%, 39%);
+  text-shadow: 0 0 8px rgba(255,255,255,0.6);
+}
+
+/* File input + buttons */
+input[type="file"], button {
+  margin: 10px 6px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+/* File input styling */
+input[type="file"] {
+  background: rgba(255,255,255,0.18);
+  color: #062e8e;
+  cursor: pointer;
+}
+
+/* ✨ Predict Button with Glow Effect */
+#predictBtn {
+  background: linear-gradient(90deg, #ff6a00, #ee0979);
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 26px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  box-shadow: 0 0 15px rgba(255,106,0,0.8), 0 0 25px rgba(238,9,121,0.6);
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  animation: pulseGlow 2s infinite alternate ease-in-out;
+}
+
+/* Glowing animation */
+@keyframes pulseGlow {
+  from {
+    box-shadow: 0 0 10px rgba(255,106,0,0.5), 0 0 20px rgba(238,9,121,0.3);
+  }
+  to {
+    box-shadow: 0 0 30px rgba(255,106,0,0.9), 0 0 45px rgba(238,9,121,0.7);
+  }
+}
+
+/* Hover effect */
+#predictBtn:hover {
+  transform: translateY(-3px) scale(1.05);
+  background: linear-gradient(90deg, #00c9ff, #92fe9d);
+}
+
+/* Shine line */
+#predictBtn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: rgba(255,255,255,0.25);
+  transform: skewX(-25deg);
+  transition: left 0.55s ease;
+}
+
+#predictBtn:hover::before {
+  left: 125%;
+}
+
+/* Preview image */
+#preview {
+  margin-top: 14px;
+  margin-left: 30px;
+  max-width: 100%;
+  border-radius: 12px;
+  display: none;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.35);
+}
+
+/* Result view (2nd page) */
+.result-view {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  gap: 20px;
+}
+
+/* Result content */
+/* Title and paragraph inside result card */
+.result-card h3 {
+  margin: 0 0 10px 0;
+  color: #ffffff;
+  font-size: 1.5rem;
+  text-shadow: 0 0 8px rgba(255,255,255,0.5);
+}
+
+.result-card p {
+  margin: 6px 0;
+}
+
+/* Back button */
+.btn-back {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.18s;
+}
+
+.btn-back:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateY(-2px);
+}
+
+/* Language cards for horizontal display */
+.languages {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.lang {
+  flex: 1 1 280px;
+  background: rgba(255,255,255,0.1);
+  padding: 14px;
+  border-radius: 10px;
+  min-width: 260px;
+}
+
+.lang b {
+  display: block;
+  margin-bottom: 6px;
+  color: #fff;
+}
+
+/* Responsive layout */
+@media (max-width: 720px) {
+  .languages {
+    flex-direction: column;
+  }
+  .container {
+    padding: 22px;
+  }
+  #main {
+    font-size: 1.05rem;
+  }
+}

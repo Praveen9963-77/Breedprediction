@@ -2,64 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Breed Detector</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-    }
-    input, button {
-      margin: 10px;
-      padding: 10px;
-    }
-    #result {
-      margin-top: 20px;
-      font-size: 1.2em;
-    }
-  </style>
+  <title>🐄 Breed Detector</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-  <h2>🐄 Breed Detector</h2>
-  <input type="file" id="imageInput" accept="image/*" />
-  <button id="predictBtn">Predict</button>
-  <div id="result"></div>
+  <div class="app">
 
-  <script>
-    const predictBtn = document.getElementById("predictBtn");
-    const imageInput = document.getElementById("imageInput");
-    const resultDiv = document.getElementById("result");
+    <!-- Tagline stays fixed above both views -->
+    <h2 id="main">🌾 Empowering Farmers with AI — Simplifying Livestock Management, One Prediction at a Time.</h2>
 
-    predictBtn.addEventListener("click", async () => {
-      const file = imageInput.files[0];
-      if (!file) {
-        resultDiv.textContent = "Please select an image.";
-        return;
-      }
+    <!-- MAIN VIEW (upload + predict) -->
+    <div id="mainView" class="container" aria-hidden="false">
+      <h2 class="section-title">AI Based 🐄 Breed Detector</h2>
 
-      const formData = new FormData();
-      formData.append("image", file);
+      <input type="file" id="imageInput" accept="image/*" />
+      <br>
+      <button id="predictBtn">Predict</button>
 
-      resultDiv.textContent = "⏳ Predicting...";
+      <img id="preview" src="" alt="Image Preview">
 
-      try {
-        const response = await fetch("https://breedprediction-5.onrender.com/predict", {
-          method: "POST",
-          body: formData
-        });
+      <div id="mainResult" style="margin-top:12px;color:#fff;text-align:left;"></div>
+    </div>
 
-        const data = await response.json();
+    <!-- RESULT VIEW (hidden initially) -->
+    <div id="resultView" class="result-view" aria-hidden="true">
+      <!-- Left column: small preview + controls -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:12px;width:320px;">
+        <div class="container" style="max-width:320px; width:100%;">
+          <h2 class="section-title" style="font-size:1.4rem;margin-bottom:10px;">Prediction Result</h2>
+          <img id="resultPreview" src="" alt="Result Preview" style="display:block;max-width:100%;border-radius:10px;">
+          <div class="controls">
+            <button id="backBtn" class="btn-back">◀ Back</button>
+            <button id="newPredictBtn" class="btn-back" title="Upload a different image">Upload another</button>
+          </div>
+        </div>
+      </div>
 
-        if (data.error) {
-          resultDiv.textContent = "❌ " + data.error;
-        } else {
-          resultDiv.innerHTML = `✅ Predicted: <b>${data.predicted_breed}</b> (${data.confidence.toFixed(2)}%)`;
-        }
-      } catch (error) {
-        console.error(error);
-        resultDiv.textContent = "❌ Error predicting breed.";
-      }
-    });
-  </script>
+      <!-- Right column: descriptions -->
+      <div class="result-card" id="resultCard">
+        <h3 id="breedName">Breed name</h3>
+        <p id="breedSummary" style="margin-bottom:6px;color:#fff;opacity:0.95;"></p>
+
+        <div class="languages" id="langContainer">
+          <div class="lang" id="enBox"><b>🌐 English</b><div id="enText"></div></div>
+          <div class="lang" id="hiBox"><b>🇮🇳 Hindi</b><div id="hiText"></div></div>
+          <div class="lang" id="teBox"><b>🇮🇳 Telugu</b><div id="teText"></div></div>
+        </div>
+
+        <div style="margin-top:12px;color:#fff;opacity:0.9;" id="extraInfo"></div>
+      </div>
+    </div>
+<script src="/static/script.js"></script>
+  </div>
 </body>
 </html>
