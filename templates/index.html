@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="/static/styles.css">
 </head>
+
 <body>
   <div class="app">
 
-    <!-- Tagline stays fixed above both views -->
     <h2 id="main">🌾 Empowering Farmers with AI — Simplifying Livestock Management, One Prediction at a Time.</h2>
 
-    <!-- MAIN VIEW (upload + predict) -->
+    <!-- MAIN VIEW -->
     <div id="mainView" class="container" aria-hidden="false">
       <h2 class="section-title">AI Based 🐄 Breed Detector</h2>
 
@@ -25,13 +25,13 @@
       <div id="mainResult" style="margin-top:12px;color:#fff;text-align:left;"></div>
     </div>
 
-    <!-- RESULT VIEW (hidden initially) -->
+    <!-- RESULT VIEW -->
     <div id="resultView" class="result-view" aria-hidden="true">
-      <!-- Left column: small preview + controls -->
+      <!-- Left: Preview & Controls -->
       <div style="display:flex;flex-direction:column;align-items:center;gap:12px;width:320px;">
         <div class="container" style="max-width:320px; width:100%;">
           <h2 class="section-title" style="font-size:1.4rem;margin-bottom:10px;">Prediction Result</h2>
-          <img id="resultPreview" src="" alt="Result Preview" style="display:block;max-width:100%;border-radius:10px;">
+          <img id="resultPreview" src="" alt="Result Preview">
           <div class="controls">
             <button id="backBtn" class="btn-back">◀ Back</button>
             <button id="newPredictBtn" class="btn-back" title="Upload a different image">Upload another</button>
@@ -39,21 +39,33 @@
         </div>
       </div>
 
-      <!-- Right column: descriptions -->
+      <!-- Right: Description -->
       <div class="result-card" id="resultCard">
         <h3 id="breedName">Breed name</h3>
         <p id="breedSummary" style="margin-bottom:6px;color:#fff;opacity:0.95;"></p>
 
         <div class="languages" id="langContainer">
-          <div class="lang" id="enBox"><b>🌐 English</b><div id="enText"></div></div>
-          <div class="lang" id="hiBox"><b>🇮🇳 Hindi</b><div id="hiText"></div></div>
-          <div class="lang" id="teBox"><b>🇮🇳 Telugu</b><div id="teText"></div></div>
+          <div class="lang" id="enBox">
+            <b>🌐 English</b>
+            <div id="enText"></div>
+          </div>
+
+          <div class="lang" id="hiBox">
+            <b>🇮🇳 Hindi</b>
+            <div id="hiText"></div>
+          </div>
+
+          <div class="lang" id="teBox">
+            <b>🇮🇳 Telugu</b>
+            <div id="teText"></div>
+          </div>
         </div>
 
-        <div style="margin-top:12px;color:#fff;opacity:0.9;" id="extraInfo"></div>
+        <div id="extraInfo"></div>
       </div>
     </div>
-<script src="/static/script.js"></script>
+
+    <script src="/static/script.js"></script>
   </div>
 </body>
 </html>

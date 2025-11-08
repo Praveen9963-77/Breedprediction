@@ -173,13 +173,14 @@ input[type="file"] {
 /* Title and paragraph inside result card */
 .result-card h3 {
   margin: 0 0 10px 0;
-  color: #ffffff;
+  color: #1944e1;
   font-size: 1.5rem;
   text-shadow: 0 0 8px rgba(255,255,255,0.5);
 }
 
 .result-card p {
   margin: 6px 0;
+  color: #7261df;
 }
 
 /* Back button */
@@ -212,6 +213,8 @@ input[type="file"] {
   padding: 14px;
   border-radius: 10px;
   min-width: 260px;
+  color: #a5d017;
+  font-size: larger;
 }
 
 .lang b {
@@ -231,4 +234,16 @@ input[type="file"] {
   #main {
     font-size: 1.05rem;
   }
+}
+/* Make breed info subheadings larger and more prominent */
+#enText strong,
+#hiText strong,
+#teText strong {
+  font-size: 1.3rem;
+  color: #ffcc80;
+  display: block;
+  margin-top: 14px;
+  margin-bottom: 6px;
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(255, 204, 128, 0.5);
 }
